@@ -1,5 +1,5 @@
 export interface CanvasState {
-  canvas: any | null
+  canvas: HTMLCanvasElement | null
 }
 
 // сделать ТИП ДЛЯ КАНВАСА! В СТАТЕ И В СЕТ КАНВАС АКТИОНЕ + В АКТИОН КРЕАТОРЕ КАНВАС
@@ -10,7 +10,7 @@ export enum CanvasActionTypes {
 
 interface SetCanvasAction {
   type: CanvasActionTypes.SET_CANVAS,
-  payload: any
+  payload: HTMLCanvasElement | null
 }
 
 export type CanvasAction =  SetCanvasAction 

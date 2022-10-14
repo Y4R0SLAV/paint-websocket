@@ -2,14 +2,20 @@ import { useEffect, useRef } from 'react'
 import '../styles/canvas.scss'
 import { useTypedSelector } from './../hooks/useTypedSelector';
 import { useActions } from './../hooks/useActions';
+import { ToolTypes } from '../types/tool';
+import Brush from './../tools/brush';
 
 export const Canvas = () => {
-  const {setCanvas} = useActions()
-  const canvasRef = useRef<HTMLCanvasElement>(null)
+  const {setCanvas, setTool} = useActions()
+  const canvasRef = useRef<HTMLCanvasElement | null>(null)
 
   useEffect(() => {
-    setCanvas(canvasRef.current)
-    console.log(canvasRef.current)
+    if (canvasRef.current) {
+      setCanvas(canvasRef.current)
+    
+      setTool(new Brush(canvasRef.current))
+    }
+
   }, [])
   
   return <div className="canvas">

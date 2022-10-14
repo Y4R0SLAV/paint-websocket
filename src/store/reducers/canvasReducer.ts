@@ -1,4 +1,4 @@
-import { CanvasState, CanvasAction, CanvasActionTypes } from './../../types/canvas';
+import { CanvasState, CanvasAction, CanvasActionTypes } from './../../types/canvas'
 
 const initialState: CanvasState = {
   canvas: null

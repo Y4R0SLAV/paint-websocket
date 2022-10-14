@@ -1,5 +1,7 @@
+import Brush from './../tools/brush';
+
 export interface ToolState {
-  tool: ToolTypes | null
+  tool: Brush | null;
 }
 
 export enum ToolActionTypes {
@@ -7,12 +9,7 @@ export enum ToolActionTypes {
   REMOVE_TOOL = "REMOVE_TOOL"
 }
 
-export enum ToolTypes {
-  BRUSH = "BRUSH",
-  CIRCLE = "REMOVE_TOOL",
-  RECT = "RECT",
-  ERASER = "ERASER"
-}
+
 
 interface ChangeToolAction {
   type: ToolActionTypes.CHANGE_TOOL,
@@ -26,3 +23,5 @@ interface RemoveToolAction {
 
 export type ToolAction =  ChangeToolAction 
                           | RemoveToolAction
+
+export type ToolTypes = Brush
