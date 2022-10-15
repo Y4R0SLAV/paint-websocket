@@ -1,9 +1,7 @@
 import { useEffect, useRef } from 'react'
 import '../styles/canvas.scss'
-import { useTypedSelector } from './../hooks/useTypedSelector';
-import { useActions } from './../hooks/useActions';
-import { ToolTypes } from '../types/tool';
-import Brush from './../tools/brush';
+import { useActions } from './../hooks/useActions'
+import Brush from './../tools/brush'
 
 export const Canvas = () => {
   const {setCanvas, setTool} = useActions()

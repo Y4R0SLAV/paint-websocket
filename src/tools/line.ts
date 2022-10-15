@@ -1,7 +1,10 @@
 import Tool from './tool'
 
-export default class Eraser extends Tool {
+export default class Line extends Tool {
   mouseDown = false
+  saved = ""
+  startX = -1
+  startY = -1
 
   constructor(canvas: HTMLCanvasElement) {
     super(canvas)
@@ -24,28 +27,39 @@ export default class Eraser extends Tool {
     this.ctx.beginPath()
 
     const rect = this.canvas.getBoundingClientRect()
-    const x = e.clientX - rect.left
-    const y = e.clientY - rect.top
 
-    this.ctx.moveTo(x, y)
+    this.startX = e.clientX - rect.left
+    this.startY = e.clientY - rect.top
+
+    this.ctx.moveTo(this.startX, this.startY)
+    this.saved = this.canvas.toDataURL()
   }
 
   mouseMoveHandler(e: MouseEvent) {
     if (this.mouseDown) {
       const rect = this.canvas.getBoundingClientRect()
-      const x = e.clientX - rect.left
-      const y = e.clientY - rect.top
+
+      let x = e.clientX - rect.left
+      let y = e.clientY - rect.top 
 
       this.draw(x, y)
     }
   }
 
   draw(x: number, y: number) {
-    this.ctx.lineTo(x, y)
-    this.ctx.stroke()
 
-    
 
+    const img = new Image()
+    img.src = this.saved
+    img.onload = () => {
+      this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
+      this.ctx.drawImage(img, 0, 0, this.canvas.width, this.canvas.height)
+
+      this.ctx.beginPath()
+      this.ctx.moveTo(this.startX, this.startY)
+      this.ctx.lineTo(x, y)
+      this.ctx.fill()
+      this.ctx.stroke()
+    }
   }
-
 }

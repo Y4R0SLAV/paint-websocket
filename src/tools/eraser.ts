@@ -6,7 +6,7 @@ export default class Eraser extends Tool {
   constructor(canvas: HTMLCanvasElement) {
     super(canvas)
 
-    this.listen( )
+    this.listen()
   }
 
   listen() {
@@ -17,9 +17,11 @@ export default class Eraser extends Tool {
 
   mouseUpHandler(e: MouseEvent) {
     this.mouseDown = false
+    this.ctx.strokeStyle = "black"
   }
 
   mouseDownHandler(e: MouseEvent) {
+    this.ctx.strokeStyle = "white"
     this.mouseDown = true
     this.ctx.beginPath()
 
@@ -43,9 +45,6 @@ export default class Eraser extends Tool {
   draw(x: number, y: number) {
     this.ctx.lineTo(x, y)
     this.ctx.stroke()
-
-    
-
   }
 
 }
