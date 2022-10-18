@@ -31,7 +31,6 @@ export default class Line extends Tool {
     this.startX = e.clientX - rect.left
     this.startY = e.clientY - rect.top
 
-    this.ctx.moveTo(this.startX, this.startY)
     this.saved = this.canvas.toDataURL()
   }
 
@@ -47,10 +46,9 @@ export default class Line extends Tool {
   }
 
   draw(x: number, y: number) {
-
-
     const img = new Image()
     img.src = this.saved
+
     img.onload = () => {
       this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
       this.ctx.drawImage(img, 0, 0, this.canvas.width, this.canvas.height)
