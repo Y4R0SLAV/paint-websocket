@@ -1,50 +1,16 @@
-import Tool from './tool'
+import Brush from './brush'
 
-export default class Eraser extends Tool {
+export default class Eraser extends Brush {
   mouseDown = false
 
   constructor(canvas: HTMLCanvasElement) {
     super(canvas)
-
-    this.listen()
-  }
-
-  listen() {
-    this.canvas.onmousemove = this.mouseMoveHandler.bind(this)
-    this.canvas.onmousedown = this.mouseDownHandler.bind(this)
-    this.canvas.onmouseup = this.mouseUpHandler.bind(this)
-  }
-
-  mouseUpHandler(e: MouseEvent) {
-    this.mouseDown = false
-    this.ctx.strokeStyle = "black"
-  }
-
-  mouseDownHandler(e: MouseEvent) {
-    this.ctx.strokeStyle = "white"
-    this.mouseDown = true
-    this.ctx.beginPath()
-
-    const rect = this.canvas.getBoundingClientRect()
-    const x = e.clientX - rect.left
-    const y = e.clientY - rect.top
-
-    this.ctx.moveTo(x, y)
-  }
-
-  mouseMoveHandler(e: MouseEvent) {
-    if (this.mouseDown) {
-      const rect = this.canvas.getBoundingClientRect()
-      const x = e.clientX - rect.left
-      const y = e.clientY - rect.top
-
-      this.draw(x, y)
-    }
   }
 
   draw(x: number, y: number) {
+    this.ctx.strokeStyle = "white"
     this.ctx.lineTo(x, y)
     this.ctx.stroke()
   }
-
+  
 }

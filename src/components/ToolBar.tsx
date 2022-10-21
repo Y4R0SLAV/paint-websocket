@@ -7,19 +7,63 @@ import Brush from "../tools/brush"
 import Circle from './../tools/circle'
 import Eraser from './../tools/eraser'
 import Line from './../tools/line'
+import { useState } from "react"
 
 export const ToolBar = () => {
-  const {setTool} = useActions()
+  const {setTool, setFillColor, setStrokeColor} = useActions()
   const canvas = useTypedSelector(state => state.canvas.canvas)
+  const tool = useTypedSelector(state => state.tool.tool)
+  const strokeColor = useTypedSelector(state => state.tool.strokeColor)
+
+  let [usedEraser, setUsedEraser] = useState(false)
+
+  const changeColor = (c: string) => {
+    tool?.setFillColor(c)
+    setFillColor(c)
+
+    tool?.setStrokeColor(c)
+    setStrokeColor(c)
+  }
+
+  const setPreviousColor = () => {
+    if (usedEraser) {
+      setUsedEraser(false)
+      tool?.setStrokeColor(strokeColor || "black")
+    }
+  }
+  
+
+  const changeTool = (n: number) => {
+    if (canvas) {
+      switch(n) {
+        case 1:
+          setTool(new Brush(canvas));
+          break;
+
+        case 2:
+          setTool(new Rect(canvas));
+          break;
+
+        case 3:
+          setTool(new Circle(canvas));
+          break;
+
+        case 4:
+          setTool(new Line(canvas));
+          break;
+      }
+      setPreviousColor()
+    }
+  }
 
   return <div className="toolbar">
-    <button className="toolbar__btn brush" onClick={() => {canvas && setTool(new Brush(canvas))}}/>
-    <button className="toolbar__btn rect"  onClick={() => {canvas && setTool(new Rect(canvas))}}/>
-    <button className="toolbar__btn circle" onClick={() => {canvas && setTool(new Circle(canvas))}}/>
-    <button className="toolbar__btn eraser" onClick={() => {canvas && setTool(new Eraser(canvas))}}/>
-    <button className="toolbar__btn line" onClick={() => {canvas && setTool(new Line(canvas))}}/>
+    <button className="toolbar__btn brush" onClick={() => changeTool(1)}/>
+    <button className="toolbar__btn rect"  onClick={() => changeTool(2)}/>
+    <button className="toolbar__btn circle" onClick={() => changeTool(3)}/>
+    <button className="toolbar__btn eraser" onClick={() => {canvas && setTool(new Eraser(canvas)); setUsedEraser(true)}}/>
+    <button className="toolbar__btn line" onClick={() => changeTool(4)}/>
 
-    <input className="input__color" type="color" />
+    <input onChange={e => changeColor(e.currentTarget.value)} className="input__color" type="color" />
 
     <button className="toolbar__btn undo"/>
     <button className="toolbar__btn redo"/>

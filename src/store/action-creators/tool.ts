@@ -8,14 +8,14 @@ export const removeTool = (): ToolAction => {
   return { type: ToolActionTypes.REMOVE_TOOL }
 }
 
-export const fillColor = (color: string) => {
+export const setFillColor = (color: string) => {
   return {type: ToolActionTypes.SET_FILL_COLOR, payload: color}
 }
 
-export const strokeColor = (color: string) => {
+export const setStrokeColor = (color: string) => {
   return {type: ToolActionTypes.SET_STROKE_COLOR, payload: color}
 }
 
-export const lineWidth = (width: number) => {
+export const setLineWidth = (width: number) => {
   return {type: ToolActionTypes.SET_LINE_WIDTH, payload: width}
 }
