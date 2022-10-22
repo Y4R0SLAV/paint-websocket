@@ -10,7 +10,7 @@ import Line from './../tools/line'
 import { useState } from "react"
 
 export const ToolBar = () => {
-  const {setTool, setFillColor, setStrokeColor} = useActions()
+  const {setTool, setFillColor, setStrokeColor, undo, redo } = useActions()
   const canvas = useTypedSelector(state => state.canvas.canvas)
   const tool = useTypedSelector(state => state.tool.tool)
   const strokeColor = useTypedSelector(state => state.tool.strokeColor)
@@ -65,8 +65,8 @@ export const ToolBar = () => {
 
     <input onChange={e => changeColor(e.currentTarget.value)} className="input__color" type="color" />
 
-    <button className="toolbar__btn undo"/>
-    <button className="toolbar__btn redo"/>
+    <button className="toolbar__btn undo" onClick={() => undo()}/>
+    <button className="toolbar__btn redo" onClick={() => redo()}/>
     <button className="toolbar__btn save"/>
 
   </div>
