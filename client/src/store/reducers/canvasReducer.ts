@@ -4,6 +4,9 @@ const initialState: CanvasState = {
   canvas: null,
   undoList: [],
   redoList: [],
+  username: "",
+  sessionId: "",
+  socket: null,
 }
 
 export const canvasReducer = (state = initialState, action: CanvasAction): CanvasState => {
@@ -53,6 +56,15 @@ export const canvasReducer = (state = initialState, action: CanvasAction): Canva
       } 
       return {...state, undoList: newUndoList, redoList: newRedoList}
 
+    case CanvasActionTypes.SET_USERNAME:
+      return {...state, username: action.payload}
+
+    case CanvasActionTypes.SET_SOKET:
+      return {...state, socket: action.payload}
+
+    case CanvasActionTypes.SET_SESSION_ID:
+      return {...state, sessionId: action.payload}
+    
     default:
       return state
   }

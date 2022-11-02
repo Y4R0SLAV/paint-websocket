@@ -19,3 +19,15 @@ export const undo = (): CanvasAction => {
 export const redo = (): CanvasAction => {
   return {type: CanvasActionTypes.REDO}
 }
+
+export const setUsername = (s: string): CanvasAction => {
+  return {type: CanvasActionTypes.SET_USERNAME, payload: s}
+}
+
+export const setSocket = (s: WebSocket | null): CanvasAction => {
+  return {type: CanvasActionTypes.SET_SOKET, payload: s}
+}
+
+export const setSessionId = (s: string): CanvasAction => {
+  return {type: CanvasActionTypes.SET_SESSION_ID, payload: s}
+}
