@@ -67,3 +67,10 @@ export type CanvasAction =  SetCanvasAction
                             | SetUsernameAction
                             | SetSessionIdAction
                             | SetSocketAction
+
+
+export type figureType = {
+  type: "brush" | "finish",
+  x?: number,
+  y?: number
+}

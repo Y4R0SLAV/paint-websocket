@@ -14,6 +14,8 @@ export const ToolBar = () => {
   const canvas = useTypedSelector(state => state.canvas.canvas)
   const tool = useTypedSelector(state => state.tool.tool)
   const strokeColor = useTypedSelector(state => state.tool.strokeColor)
+  const socket = useTypedSelector(state => state.canvas.socket) as WebSocket
+  const sessionId = useTypedSelector(state => state.canvas.sessionId)
 
   let [usedEraser, setUsedEraser] = useState(false)
 
@@ -37,20 +39,20 @@ export const ToolBar = () => {
     if (canvas) {
       switch(n) {
         case 1:
-          setTool(new Brush(canvas));
+          setTool(new Brush(canvas, socket, sessionId));
           break;
 
-        case 2:
-          setTool(new Rect(canvas));
-          break;
+        // case 2:
+        //   setTool(new Rect(canvas));
+        //   break;
 
-        case 3:
-          setTool(new Circle(canvas));
-          break;
+        // case 3:
+        //   setTool(new Circle(canvas));
+        //   break;
 
-        case 4:
-          setTool(new Line(canvas));
-          break;
+        // case 4:
+        //   setTool(new Line(canvas));
+        //   break;
       }
       setPreviousColor()
     }
@@ -60,7 +62,7 @@ export const ToolBar = () => {
     <button className="toolbar__btn brush" onClick={() => changeTool(1)}/>
     <button className="toolbar__btn rect"  onClick={() => changeTool(2)}/>
     <button className="toolbar__btn circle" onClick={() => changeTool(3)}/>
-    <button className="toolbar__btn eraser" onClick={() => {canvas && setTool(new Eraser(canvas)); setUsedEraser(true)}}/>
+    <button className="toolbar__btn eraser" onClick={() => {canvas && setTool(new Eraser(canvas, socket, sessionId)); setUsedEraser(true)}}/>
     <button className="toolbar__btn line" onClick={() => changeTool(4)}/>
 
     <input onChange={e => changeColor(e.currentTarget.value)} className="input__color" type="color" />

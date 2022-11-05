@@ -6,9 +6,8 @@ export default class Rect extends Tool {
   startY = -1000
   saved = ""
 
-  constructor(canvas: HTMLCanvasElement) {
-    super(canvas)
-
+  constructor(canvas: HTMLCanvasElement, socket: WebSocket, id: string) {
+    super(canvas, socket, id)
     this.listen( )
   }
 

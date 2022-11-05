@@ -5,17 +5,18 @@ import Brush from './../tools/brush'
 import { MyModal } from './Modal'
 import { useParams } from 'react-router-dom'
 import { useTypedSelector } from './../hooks/useTypedSelector'
+import { figureType } from '../types/canvas'
 
 export const Canvas = () => {
   const {setCanvas, setTool, pushToUndo, setSessionId, setSocket} = useActions()
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
   const params = useParams()
   const username = useTypedSelector(state => state.canvas.username)
+  const socket = useTypedSelector(state => state.canvas.socket) as WebSocket
 
   useEffect(() => {
     if (canvasRef.current) {
       setCanvas(canvasRef.current)
-      setTool(new Brush(canvasRef.current))
     }
   }, [])
 
@@ -24,6 +25,8 @@ export const Canvas = () => {
       const socket = new WebSocket("ws://localhost:5000")
       setSessionId(params.id || "")
       setSocket(socket)
+
+      setTool(new Brush(canvasRef.current as HTMLCanvasElement, socket, params.id as string))
 
       socket.onopen = () => {
         socket.send(JSON.stringify({
@@ -47,8 +50,17 @@ export const Canvas = () => {
     }
   }, [username])
 
-  const drawHandler = (msg: {connection: "draw", username: string, id: string}) => {
-
+  const drawHandler = (msg: {connection: "draw", username: string, id: string, figure: figureType}) => {
+    const figure = msg.figure
+    const ctx = canvasRef.current?.getContext("2d") as CanvasRenderingContext2D
+    switch(figure.type) { 
+      case "brush":
+        Brush.draw(ctx, figure.x as number, figure.y as number)
+        break
+      case "finish":
+        ctx.beginPath()
+        break
+    }
   }
   
   return <div className="canvas">

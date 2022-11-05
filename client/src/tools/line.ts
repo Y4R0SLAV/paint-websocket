@@ -6,12 +6,11 @@ export default class Line extends Tool {
   startX = -1
   startY = -1
 
-  constructor(canvas: HTMLCanvasElement) {
-    super(canvas)
-
+  constructor(canvas: HTMLCanvasElement, socket: WebSocket, id: string) {
+    super(canvas, socket, id)
     this.listen( )
   }
-
+  
   listen() {
     this.canvas.onmousemove = this.mouseMoveHandler.bind(this)
     this.canvas.onmousedown = this.mouseDownHandler.bind(this)

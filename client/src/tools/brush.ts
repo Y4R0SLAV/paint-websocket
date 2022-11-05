@@ -3,9 +3,8 @@ import Tool from './tool'
 export default class Eraser extends Tool {
   mouseDown = false
 
-  constructor(canvas: HTMLCanvasElement) {
-    super(canvas)
-
+  constructor(canvas: HTMLCanvasElement, socket: WebSocket, id: string) {
+    super(canvas, socket, id)
     this.listen( )
   }
 
@@ -17,6 +16,13 @@ export default class Eraser extends Tool {
 
   mouseUpHandler(e: MouseEvent) {
     this.mouseDown = false
+    this.socket.send(JSON.stringify({
+      method: "draw",
+      id: this.id,
+      figure: {
+        type: "finish"
+      }
+    }))  
   }
 
   mouseDownHandler(e: MouseEvent) {
@@ -36,16 +42,21 @@ export default class Eraser extends Tool {
       const x = e.clientX - rect.left
       const y = e.clientY - rect.top
 
-      this.draw(x, y)
+      // this.draw(x, y)
+      this.socket.send(JSON.stringify({
+        method: "draw",
+        id: this.id,
+        figure: {
+          type: "brush",
+          x,
+          y }
+      }))
     }
   }
 
-  draw(x: number, y: number) {
-    this.ctx.lineTo(x, y)
-    this.ctx.stroke()
-
-    
-
+  static draw(ctx: CanvasRenderingContext2D, x: number, y: number) {
+    ctx.lineTo(x, y)
+    ctx.stroke()
   }
 
 }
