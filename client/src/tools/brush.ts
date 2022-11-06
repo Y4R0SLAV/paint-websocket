@@ -1,3 +1,4 @@
+import { BrushSocketType, FinishSocketType } from '../types/canvas'
 import Tool from './tool'
 
 export default class Eraser extends Tool {
@@ -21,7 +22,7 @@ export default class Eraser extends Tool {
       id: this.id,
       figure: {
         type: "finish"
-      }
+      } as FinishSocketType
     }))  
   }
 
@@ -42,14 +43,13 @@ export default class Eraser extends Tool {
       const x = e.clientX - rect.left
       const y = e.clientY - rect.top
 
-      // this.draw(x, y)
       this.socket.send(JSON.stringify({
         method: "draw",
         id: this.id,
         figure: {
           type: "brush",
           x,
-          y }
+          y } as BrushSocketType
       }))
     }
   }

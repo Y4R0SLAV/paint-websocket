@@ -69,8 +69,27 @@ export type CanvasAction =  SetCanvasAction
                             | SetSocketAction
 
 
-export type figureType = {
-  type: "brush" | "finish",
-  x?: number,
-  y?: number
+export type figureSocketType =  BrushSocketType 
+                          | FinishSocketType
+                          | RectSocketType
+
+export type BrushSocketType = {
+  type: "brush"
+  x: number
+  y: number
+  color: string
+}
+
+export type RectSocketType = {
+  type: "rect"
+  x: number
+  y: number
+  width: number
+  height: number
+  color: string
+}
+
+
+export type FinishSocketType = {
+  type: "finish"
 }

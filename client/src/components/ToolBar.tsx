@@ -42,17 +42,17 @@ export const ToolBar = () => {
           setTool(new Brush(canvas, socket, sessionId));
           break;
 
-        // case 2:
-        //   setTool(new Rect(canvas));
-        //   break;
+        case 2:
+          setTool(new Rect(canvas, socket, sessionId));
+          break;
 
-        // case 3:
-        //   setTool(new Circle(canvas));
-        //   break;
+        case 3:
+          setTool(new Circle(canvas, socket, sessionId));
+          break;
 
-        // case 4:
-        //   setTool(new Line(canvas));
-        //   break;
+        case 4:
+          setTool(new Line(canvas, socket, sessionId));
+          break;
       }
       setPreviousColor()
     }

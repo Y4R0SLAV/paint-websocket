@@ -1,11 +1,12 @@
 import { useEffect, useRef } from 'react'
 import '../styles/canvas.scss'
 import { useActions } from './../hooks/useActions'
-import Brush from './../tools/brush'
 import { MyModal } from './Modal'
 import { useParams } from 'react-router-dom'
 import { useTypedSelector } from './../hooks/useTypedSelector'
-import { figureType } from '../types/canvas'
+import { figureSocketType } from '../types/canvas'
+import Brush from './../tools/brush'
+import Rect from './../tools/rect'
 
 export const Canvas = () => {
   const {setCanvas, setTool, pushToUndo, setSessionId, setSocket} = useActions()
@@ -50,13 +51,16 @@ export const Canvas = () => {
     }
   }, [username])
 
-  const drawHandler = (msg: {connection: "draw", username: string, id: string, figure: figureType}) => {
+  const drawHandler = (msg: {connection: "draw", username: string, id: string, figure: figureSocketType}) => {
     const figure = msg.figure
     const ctx = canvasRef.current?.getContext("2d") as CanvasRenderingContext2D
     switch(figure.type) { 
       case "brush":
-        Brush.draw(ctx, figure.x as number, figure.y as number)
+        Brush.draw(ctx, figure.x , figure.y )
         break
+      case "rect":
+        Rect.staticDraw(ctx, figure.x, figure.y, figure.width, figure.height, figure.color)
+        break  
       case "finish":
         ctx.beginPath()
         break
